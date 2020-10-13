@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <style>
+.site-block{
+    padding:20px;
+    border:1px solid #eee;
+    margin-top: 10px;
+    }
+
+    .site-text{
+        position:relative;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+<div style="width: 500px ;margin: 0 auto;">
+
+{% endblock %}
+
+{% block js %}
+
+<script src="{% static 'jquery.min.js' %}">s</script>
+
+    <script>
+      $('.captcha').click(function () {
+    $.getJSON("/captcha/refresh/", function (result) {
+        $('.captcha').attr('src', result['image_url']);
+        $('#id_captcha_0').val(result['key'])
+    });
+
+
+});
+    </script>
+
+
+<script>
+
+
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+
+});
+</script>
+
+{% endblock %}

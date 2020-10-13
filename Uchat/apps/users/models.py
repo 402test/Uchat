@@ -12,7 +12,7 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
 
-class VerifyCode(models):
+class VerifyCode(models.Model):
     '''邮箱验证码'''
     code = models.CharField(verbose_name='验证码', max_length=10)
     email = models.EmailField(verbose_name='邮箱', default='')
