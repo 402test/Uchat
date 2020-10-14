@@ -1,3 +1,5 @@
+
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
@@ -5,11 +7,13 @@ from datetime import datetime
 
 
 class User(AbstractUser):
+    uuid =  models.UUIDField(default=uuid.uuid4)
     nickname = models.CharField(null=True, blank=True, max_length=255, verbose_name='昵称')
     picture = models.ImageField(upload_to='media/profile_pics/', null=True, blank=True, verbose_name='头像')
-    phone = models.CharField(max_length=12,verbose_name='手机号码')
+    phone = models.CharField(max_length=12,unique=True,verbose_name='手机号码')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+
 
 
 class VerifyCode(models.Model):

@@ -18,6 +18,10 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
+
+APPS_DIR = ROOT_DIR.path('Uchat')
+
+
 # reading .env file
 env.read_env(str(ROOT_DIR.path('.env')))
 
@@ -72,7 +76,7 @@ ROOT_URLCONF = 'Uchat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR,'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

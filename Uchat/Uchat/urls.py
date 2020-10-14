@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('accounts/', include('users.urls')),
-    path('captcha',include('captcha.urls'))
+    path('captcha',include('captcha.urls')),
 ]
