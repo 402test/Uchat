@@ -15,6 +15,25 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
 
+    class Meta:
+        verbose_name = '用户'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.phone
+
+
+    @classmethod
+    def add_new_user(cls, cleaned_data):
+        user = cls.objects.create_user(
+            cleaned_data["phone"],
+            cleaned_data["username"],
+            cleaned_data["password"],
+
+        )
+        user.save()
+        return user
+
 
 class VerifyCode(models.Model):
     '''邮箱验证码'''

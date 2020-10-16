@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.views.generic import TemplateView
-
+from users.models import User
 # Create your views here.
 
 # class LoginView(TemplateView):
@@ -34,8 +34,11 @@ def RegisterView(request):
             code = random.randint(1000, 10000)
             if code:
                 # 短信发送正常
-
-                pass
+                form_obj.cleaned_data['username'] =  form_obj.cleaned_data['phone']
+                user = User.add_new_user(form_obj.cleaned_data)
+                message = '短信发送成功'
+                messages.success(request,message)
+                return redirect(reverse('users:register_code',kwargs = {'uuid':user.uuid}))
             else:
                 # 短信发送失败
                 message = '短信发送失败'

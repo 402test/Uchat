@@ -19,12 +19,11 @@ class RegisterForm(forms.ModelForm):
 
     def clean_phone(self):
         value = self.cleaned_data.get('phone')
-        if re.match(r'^1[3-9]\d{9}$', value):
-            return value
-        if len(self.cleaned_data.get('phone'))!=11:
-            raise ValidationError('手机号码长度有问题')
-
-        raise ValidationError('手机号有问题')
+        if not re.match(r'^1[3-9]\d{9}$', value):
+            raise ValidationError('手机号有问题')
+        if User.objects.filter(phone=value).first():
+            raise ValidationError('该手机号码已经被注册了')  # 有问题的  如若第一次发验证码 注册失败  第二次 就注册不了了
+        return value
 
     def clean_password_t(self):
         pwd = self.cleaned_data.get('password')
