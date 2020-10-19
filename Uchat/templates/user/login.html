@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block css %}
     <style>
 .site-block{
@@ -16,16 +16,20 @@
 {% block content %}
 <div style="width: 500px ;margin: 0 auto;">
     <div class="site-text site-block" style="">
-<form class="layui-form" action="">
+<form class="layui-form" action="{% url 'users:register' %}" method="post">
+    {% csrf_token %}
   <div class="layui-form-item">
     <label class="layui-form-label">手机号码</label>
     <div class="layui-input-block">
-      <input type="text" name="title" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+      <input type="text" name="username" value="{% if register_form.phone.value %} {{ register_form.phone.value }} {% endif %}" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
     </div>
   </div>
 
       <div class="layui-form-item">
+          <label class="layui-form-label">验证码</label>
+          <div class="layui-input-inline">
     {{ register_form.captcha }}
+          </div>
   </div>
 
   <div class="layui-form-item">
@@ -33,29 +37,12 @@
     <div class="layui-input-inline">
       <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
     </div>
-    <div class="layui-form-mid layui-word-aux">6位以上数字字母</div>
-  </div>
-
-      <div class="layui-form-item">
-    <label class="layui-form-label">再次输入</label>
-    <div class="layui-input-inline">
-      <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-    </div>
-
-  </div>
-
-
-  <div class="layui-form-item">
-    <label class="layui-form-label">隐私模式</label>
-    <div class="layui-input-block">
-      <input type="checkbox" name="switch" lay-skin="switch">
-    </div>
   </div>
 
 
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
 
     </div>
   </div>
@@ -65,19 +52,37 @@
 </div>
 </div>
 
+{% for field in register_form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+    </div>
+{% endfor %}
 {% endblock %}
 
 {% block js %}
+
+<script src="{% static 'jquery.min.js' %}">s</script>
+
+    <script>
+      $('.captcha').click(function () {
+    $.getJSON("/captcha/refresh/", function (result) {
+        $('.captcha').attr('src', result['image_url']);
+        $('#id_captcha_0').val(result['key'])
+    });
+
+
+});
+    </script>
+
+
 <script>
+
+
 //Demo
 layui.use('form', function(){
   var form = layui.form;
 
-  //监听提交
-  form.on('submit(formDemo)', function(data){
-    layer.msg(JSON.stringify(data.field));
-    return false;
-  });
 });
 </script>
+
 {% endblock %}

@@ -45,6 +45,7 @@ AUTH_USER_MODEL = "users.User"
 
 LOCAL_APPS = [
     'users',
+    'groupchat'
 
 ]
 

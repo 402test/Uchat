@@ -26,13 +26,21 @@ class User(AbstractUser):
     @classmethod
     def add_new_user(cls, cleaned_data):
         user = cls.objects.create_user(
-            cleaned_data["phone"],
-            cleaned_data["username"],
-            cleaned_data["password"],
+            phone = cleaned_data["phone"],
+            username = cleaned_data["username"],
+            password = cleaned_data["password"],
 
         )
         user.save()
         return user
+
+
+class PhoneCode(models.Model):
+    code = models.CharField(verbose_name='验证码', max_length=10)
+    user = models.OneToOneField(User,related_name='pcode',on_delete=models.CASCADE)
+    def __str__(self):
+        return self.code
+
 
 
 class VerifyCode(models.Model):

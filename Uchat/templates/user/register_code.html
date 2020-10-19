@@ -2,14 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div>
 
-    请输入手机验证码<input>
+    <form action="{% url 'users:register_code' uuid %}" method="post">
+    {% csrf_token %}
+<div>
+    请输入手机验证码<input name="pcode">
 
 </div>
+    <input type="hidden" name="uuid" value="{{ uuid }}">
 
-
-
+    <button type="submit">提交</button>
+</form>
 
 
 {% endblock %}
