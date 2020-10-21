@@ -16,17 +16,26 @@
 {% endblock %}
 
 {% block content %}
+    <form method="post"  action="{% url 'groupchat:tourist_register' %}">
+
+{% csrf_token %}
+
 <div class="layui-card" id="reg">
-  <div class="layui-card-header">写个昵称(不填随机) &nbsp;&nbsp;
+  <div class="layui-card-header" >写个昵称(不填随机) &nbsp;&nbsp;
 
   |
   </div>
   <div class="layui-card-body">
       <div>
- <input type="text" style="font-size: 23px;margin-right: 10px" > <button class="layui-btn layui-btn-lg" style="background-color: #2E2D3C">开始</button>
+ <input  id="nickname" name="nickname" type="text" style="font-size: 23px;margin-right: 10px" > <button  id="start_btn" class="layui-btn layui-btn-lg" style="background-color: #2E2D3C">开始</button>
           </div>
   </div>
 </div>
+</form>
 
+{% endblock %}
 
+{% block js %}
+
+<script src="{% static 'js/groupchat.js' %}"></script>
 {% endblock %}
