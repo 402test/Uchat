@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+path('', include('groupchat.urls')),
     path('accounts/', include('users.urls')),
     path('captcha',include('captcha.urls')),
 ]
